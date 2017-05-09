@@ -1,0 +1,43 @@
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css" />
+    <link rel="stylesheet" href="../../common/index.css" />
+
+    <script src="../../../dist/xcomponent.js"></script>
+    <script src="http://localhost:8082/demo/advanced/ie11-cross-domain-popup/login.js"></script>
+</head>
+
+<body>
+
+    <h3>Log in on xyz.com</h3>
+
+    <button id="popupLogin" class="btn btn-primary">Popup Log In</button>
+
+    <div id="result"></div>
+
+    <script>
+
+        // To render a popup we need to wait for a click event
+
+        document.querySelector('#popupLogin').addEventListener('click', function() {
+
+            // Hide the button
+
+            document.querySelector('#popupLogin').style.display = 'none';
+
+            // Render the component
+
+            MyLoginXComponent.render({
+
+                prefilledEmail: 'foo@bar.com',
+
+                onLogin: function(email) {
+                    console.log('User logged in with email:', email);
+                    document.querySelector('#result').innerText = email + ' logged in!';
+                }
+            });
+        });
+
+    </script>
+
+</body>

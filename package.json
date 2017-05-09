@@ -4,7 +4,10 @@
   "description": "Cross domain components.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint src"
+    "test": "eslint src",
+    "serve-parents" : "http-server -p 8081",
+    "serve-children" : "http-server -p 8082",
+    "serve-all" : "concurrently \"npm run serve-parents \" \"npm run serve-children \""
   },
   "repository": {
     "type": "git",
@@ -74,7 +77,9 @@
     "uglifyjs-webpack-plugin": "^0.3.0",
     "webpack": "^2.2.1",
     "webpack-stream": "^3.2.0",
-    "yargs": "^4.7.1"
+    "yargs": "^4.7.1",
+	"concurrently": "^3.4.0",
+	"http-server": "^0.10.0"
   },
   "dependencies": {
     "beaver-logger": "^3",
