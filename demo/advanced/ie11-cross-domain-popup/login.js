@@ -5,11 +5,11 @@ window.MyLoginXComponent = xcomponent.create({
 
     tag: 'my-login-component',
 
-    bridgeUrl: 'http://localhost:8082/demo/advanced/ie11-cross-domain-popup/bridge.htm',
+    bridgeUrl: 'http://localhost.children.com:8082/demo/advanced/ie11-cross-domain-popup/bridge.htm',
 
     // The url that will be loaded in the iframe or popup, when someone includes my component on their page
 
-    url: 'http://localhost:8082/demo/advanced/ie11-cross-domain-popup/login.htm',
+    url: 'http://localhost.children.com:8082/demo/advanced/ie11-cross-domain-popup/login.htm',
 
     // Allow the component to be rendered as a popup
 

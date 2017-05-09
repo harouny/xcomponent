@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint src",
-    "serve-parents" : "http-server -p 8081",
-    "serve-children" : "http-server -p 8082",
+    "serve-parents" : "http-server -a localhost.parents.com -p 8081",
+    "serve-children" : "http-server -a localhost.children.com -p 8082",
     "serve-all" : "concurrently \"npm run serve-parents \" \"npm run serve-children \""
   },
   "repository": {
