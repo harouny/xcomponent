@@ -21,7 +21,7 @@ module.exports = function(config) {
             'test/lib/react_v15.1.0.js',
             'test/lib/react-dom_v15.1.0.js',
             'test/lib/angular.min.js',
-
+            'test/lib/angular2/angular2.all.umd.js',
             { pattern: 'test/test.js', included: true, served: true },
             { pattern: 'test/*.js', included: false, served: true },
             { pattern: 'test/*.htm', included: false, served: true },
