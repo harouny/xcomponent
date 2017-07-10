@@ -138,7 +138,6 @@ export class Component extends BaseComponent {
         // Register all of the drivers for instantiating components. The model used is -- there's a standard javascript
         // way of rendering a component, then each other technology (e.g. react) needs to hook into that interface.
         // This makes us a little more pluggable and loosely coupled.
-
         this.registerDrivers();
         this.registerChild();
         this.listenDelegate();
@@ -442,6 +441,36 @@ export class Component extends BaseComponent {
     renderPopupTo(win, props) {
         this.validateRenderContext(CONTEXT_TYPES.POPUP);
         return new ParentComponent(this, CONTEXT_TYPES.POPUP, { props }).renderTo(win);
+    }
+
+    prerender(props, element) {
+        let instance = new ParentComponent(this, this.getRenderContext(element), { props });
+        instance.prefetch();
+        return {
+            render(innerProps, innerElement) {
+                if (innerProps) {
+                    instance.updateProps(innerProps);
+                }
+
+                return instance.render(innerElement);
+            },
+
+            renderTo(win, innerProps, innerElement) {
+                if (innerProps) {
+                    instance.updateProps(innerProps);
+                }
+
+                return instance.renderTo(win, innerElement);
+            },
+
+            get html() {
+                return instance.html;
+            },
+
+            set html(value) {
+                instance.html = value;
+            }
+        };
     }
 
 

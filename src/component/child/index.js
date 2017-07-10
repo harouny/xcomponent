@@ -3,11 +3,11 @@ import * as $logger from 'beaver-logger/client';
 import { isSameDomain, getOpener, getAllFramesInWindow } from 'cross-domain-utils/src';
 import { send } from 'post-robot/src';
 
-import { ZalgoPromise } from 'zalgo-promise/src'; 
+import { ZalgoPromise } from 'zalgo-promise/src';
 import { BaseComponent } from '../base';
 import { getParentComponentWindow, getComponentMeta, getParentDomain, getParentRenderWindow, isXComponentWindow } from '../window';
 import { extend, onCloseWindow, deserializeFunctions, get, onDimensionsChange, trackDimensions, dimensionsMatchViewport,
-         cycle, getDomain, globalFor, setLogLevel, getElement, documentReady } from '../../lib';
+         cycle, globalFor, setLogLevel, getElement, documentReady, getDomain } from '../../lib';
 import { POST_MESSAGE, CONTEXT_TYPES, CLOSE_REASONS, INITIAL_PROPS } from '../../constants';
 import { normalizeChildProps } from './props';
 import { matchDomain } from 'cross-domain-utils/src';
@@ -29,7 +29,7 @@ export class ChildComponent extends BaseComponent {
     constructor(component) {
         super(component);
         this.component = component;
-        
+
         if (!this.hasValidParentDomain()) {
             return this.error(new RenderError(`Can not be rendered by domain: ${this.getParentDomain()}`));
         }
@@ -47,7 +47,10 @@ export class ChildComponent extends BaseComponent {
         this.setProps(this.getInitialProps(), getParentDomain());
 
         // update logLevel with prop.logLevel to override defaultLogLevel configured when creating component
-        setLogLevel(this.props.logLevel);
+
+        if (this.props.logLevel) {
+            setLogLevel(this.props.logLevel);
+        }
 
         this.component.log(`init_child`);
 
@@ -147,8 +150,10 @@ export class ChildComponent extends BaseComponent {
 
 
     setProps(props = {}, origin, required = true) {
-        window.xprops = this.props = this.props || {};
-        extend(this.props, normalizeChildProps(this.component, props, origin, required));
+        this.props = this.props || {};
+        props = normalizeChildProps(this.component, props, origin, required);
+        extend(this.props, props);
+        window.xprops = this.props;
         for (let handler of this.onPropHandlers) {
             handler.call(this, this.props);
         }
