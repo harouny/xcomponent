@@ -17,5 +17,87 @@ window.MyLoginXComponent = xcomponent.create({
 
     // The background overlay
 
-    containerTemplate: xcomponent.containerTemplate
+    containerTemplate(options) {
+
+        var id = options.id;
+        var CLASS = options.CLASS;
+        var tag = options.tag;
+        var context = options.context;
+
+        return `
+            <div id="${ id }" class="${ CLASS.XCOMPONENT } ${ CLASS.XCOMPONENT }-tag-${ tag } ${ CLASS.XCOMPONENT }-context-${context} ${CLASS.XCOMPONENT}-overlay ${CLASS.FOCUS}">
+                <a href="#${CLASS.CLOSE}" class="${CLASS.CLOSE}"></a>
+
+                <div class="${CLASS.OUTLET}"></div>
+
+                <style>
+                    #${id}.${CLASS.XCOMPONENT}-overlay {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100vw;
+                        height: 100vh;
+                        background-color: rgba(0, 0, 0, 0.8);
+                    }
+
+                    #${id}.${ CLASS.XCOMPONENT }-context-popup.${CLASS.XCOMPONENT}-overlay {
+                        cursor: pointer;
+                    }
+
+                    #${id}.${ CLASS.XCOMPONENT }-context-iframe .${CLASS.OUTLET} {
+                        box-shadow: 2px 2px 10px 3px rgba(0, 0, 0, 0.4);
+                        position: absolute;
+
+                        top: 50%;
+                        left: 50%;
+
+                        height: 150px;
+                        width: 300px;
+
+                        transform: translate3d(-50%, -50%, 0);
+                        -webkit-transform: translate3d(-50%, -50%, 0);
+                        -moz-transform: translate3d(-50%, -50%, 0);
+                        -o-transform: translate3d(-50%, -50%, 0);
+                        -ms-transform: translate3d(-50%, -50%, 0);
+                    }
+
+                    #${id}.${ CLASS.XCOMPONENT }-context-iframe iframe {
+                        height: 100%;
+                        width: 100%;
+                    }
+
+                    #${id} .${CLASS.CLOSE} {
+                        position: absolute;
+                        right: 16px;
+                        top: 16px;
+                        width: 16px;
+                        height: 16px;
+                        opacity: 0.6;
+                    }
+
+                    #${id} .${CLASS.CLOSE}:hover {
+                        opacity: 1;
+                    }
+
+                    #${id} .${CLASS.CLOSE}:before,
+                    #${id} .${CLASS.CLOSE}:after {
+                        position: absolute;
+                        left: 8px;
+                        content: ' ';
+                        height: 16px;
+                        width: 2px;
+                        background-color: white;
+                    }
+
+                    #${id} .${CLASS.CLOSE}:before {
+                        transform: rotate(45deg);
+                    }
+
+                    #${id} .${CLASS.CLOSE}:after {
+                        transform: rotate(-45deg);
+                    }
+                </style>
+            </div>
+        `;
+    }
 });
